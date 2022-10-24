@@ -46,7 +46,7 @@ export class OrderService {
 
   private _breakfastOrder(order: string): string {
     if (!order) {
-      return this._handleError(true, true, false);
+      return this._missingError(true, true, false);
     }
 
     let coffeeCount = 0;
@@ -78,7 +78,7 @@ export class OrderService {
     }
 
     if (this._outputOrderObject[ItemTypesEnum.Main] === '' || this._outputOrderObject[ItemTypesEnum.Side] === '') {
-      return this._handleError(this._outputOrderObject[ItemTypesEnum.Main] === '', this._outputOrderObject[ItemTypesEnum.Side] === '', false);
+      return this._missingError(this._outputOrderObject[ItemTypesEnum.Main] === '', this._outputOrderObject[ItemTypesEnum.Side] === '', false);
     }
 
     if (coffeeCount > 1) {
@@ -92,7 +92,7 @@ export class OrderService {
 
   private _lunchOrder(order: string): string {
     if (!order) {
-      return this._handleError(true, true, false);
+      return this._missingError(true, true, false);
     }
 
     const lunchSides: { [key: string]: number } = {};
@@ -118,7 +118,7 @@ export class OrderService {
     }
 
     if (this._outputOrderObject[ItemTypesEnum.Main] === '' || !Object.keys(lunchSides).length) {
-      return this._handleError(this._outputOrderObject[ItemTypesEnum.Main] === '', !Object.keys(lunchSides).length, false);
+      return this._missingError(this._outputOrderObject[ItemTypesEnum.Main] === '', !Object.keys(lunchSides).length, false);
     }
 
     const sides = Object.entries(lunchSides).map((side) => {
@@ -136,7 +136,7 @@ export class OrderService {
 
   private _dinnerOrder(order: string): string {
     if (!order) {
-      return this._handleError(true, true, true);
+      return this._missingError(true, true, true);
     }
 
     const orderArr = order.split(',');
@@ -154,7 +154,7 @@ export class OrderService {
     }
 
     if (this._outputOrderObject[ItemTypesEnum.Main] === '' || this._outputOrderObject[ItemTypesEnum.Side] === '' || this._outputOrderObject[ItemTypesEnum.Dessert] === '') {
-      return this._handleError(this._outputOrderObject[ItemTypesEnum.Main] === '', this._outputOrderObject[ItemTypesEnum.Side] === '', this._outputOrderObject[ItemTypesEnum.Dessert] === '');
+      return this._missingError(this._outputOrderObject[ItemTypesEnum.Main] === '', this._outputOrderObject[ItemTypesEnum.Side] === '', this._outputOrderObject[ItemTypesEnum.Dessert] === '');
     }
 
     const drinkOutput = this._outputOrderObject[ItemTypesEnum.Drink].length ? `${this._outputOrderObject[ItemTypesEnum.Drink]}, Water` : 'Water'
@@ -163,7 +163,7 @@ export class OrderService {
   }
 
 
-  private _handleError(isMainMissing: boolean, isSideMissing: boolean, isDessertMissing: boolean) {
+  private _missingError(isMainMissing: boolean, isSideMissing: boolean, isDessertMissing: boolean) {
     const mainError = isMainMissing ? this._noMainError : '';
     const sideError = !isSideMissing
       ? ''
