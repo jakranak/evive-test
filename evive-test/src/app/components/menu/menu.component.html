@@ -1,0 +1,5 @@
+<form>
+  Order: <input type="text" placeholder="1,2,3..." (blur)="orderInput($event)" name="order"/><br>
+  <button type="submit" (click)="handleSubmit()">Order</button>
+  <p *ngIf="isOrdered">{{orderFormatted}}</p>
+</form>
